@@ -10,9 +10,14 @@
 
     <div class="container">
         <div class="main_text">
-            <h1>DICO ADMIN PAGE</h1>
-            <p class="lead">DASHBOARD<br>
-                All you get is this text and a mostly barebones HTML document.</p>
+            <h1>DICO ADMIN</h1>
+            <br>
+            <p><strong>페이스북 ID로 로그인하여 시작하세요!</strong></p>
+            <fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
+            </fb:login-button>
+
+            <div id="status">
+            </div>
         </div>
     </div>
 
@@ -70,10 +75,6 @@
     }
 </script>
 
-    <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
-    </fb:login-button>
 
-    <div id="status">
-    </div>
 </body>
 </html>
