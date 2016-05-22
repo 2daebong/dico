@@ -107,15 +107,15 @@
     var fbUserId;
 
     AWS.config.region = 'ap-northeast-2';
-    var bucket = new AWS.S3({
-        params: {
-            Bucket: 'dicos3'
-        }
-    });
     AWS.config.credentials = new AWS.WebIdentityCredentials({
         ProviderId: 'graph.facebook.com',
         RoleArn: roleArn,
         WebIdentityToken: token
+    });
+    var bucket = new AWS.S3({
+        params: {
+            Bucket: 'dicos3'
+        }
     });
 
     $('.dropdown-toggle').dropdown();
