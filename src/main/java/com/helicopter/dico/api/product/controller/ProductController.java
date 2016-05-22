@@ -31,4 +31,9 @@ public class ProductController {
         return productService.addProduct(product);
     }
 
+    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    public void updateProduct(@RequestBody Product product) {
+        productService.updateProduct(product);
+    }
+
 }

@@ -27,6 +27,9 @@ public class Product {
     private String productName;
 
     @NotNull
+    private String Unit;
+
+    @NotNull
     private int price;
 
     private Long shopNo;
@@ -128,5 +131,13 @@ public class Product {
 
     public void setStock(int stock) {
         this.stock = stock;
+    }
+
+    public String getUnit() {
+        return Unit;
+    }
+
+    public void setUnit(String unit) {
+        Unit = unit;
     }
 }

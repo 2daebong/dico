@@ -11,11 +11,11 @@
 
 <div class="container">
     <div class="main_text">
-        <button class="btn btn-success btn_register_shop" data-toggle="modal" data-target="#regist_modal">신규 Product
+        <button class="btn btn-success btn_register_shop" onclick="registNewProduct();" data-toggle="modal" data-target="#regist_modal">신규 Product
             등록
         </button>
 
-        <table class="table" style="margin-top: 15px">
+        <table class="table table-hover" style="margin-top: 30px">
             <tr>
                 <td>No</td>
                 <td>사진</td>
@@ -26,14 +26,14 @@
                 <td>재고</td>
             </tr>
             <c:forEach var="item" items="${productList}">
-                <tr>
+                <tr class="clickable-row" onclick="detailView(${item.productNo})">
                     <td>${item.productNo}</td>
-                    <td><img src="${item.imageUrl}" width="150px" height="100px"></td>
-                    <td>${item.productCategory}</td>
+                    <td><img src="${item.imageUrl}" width="140px" height="140px"></td>
+                    <td>${item.productCategory.nameKr}</td>
                     <td>${item.productNameKr}</td>
                     <td>${item.registYmdt}</td>
-                    <td>${item.price}</td>
-                    <td>${item.stock}</td>
+                    <td><input style="width:70px" value="${item.price}" class="form-control">원</td>
+                    <td><input style="width:60px" value="${item.stock}" class="form-control">${item.unit}</td>
                 </tr>
             </c:forEach>
         </table>
@@ -48,21 +48,19 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">신규 상품 등록</h4>
+                    <h4 class="modal-title">상품</h4>
                 </div>
                 <div class="modal-body">
-                    <form id="register_product_form" enctype="multipart/form-data">
+                    <form id="register_product_form">
                         <div class="form-group">
                             <form>
-                                <%--<div class="form-group">--%>
-                                <%--<label for="selectShop">SHOP</label>--%>
-                                <%--<select id="selectShop" class="form-control">--%>
-                                <%--<option value="-1">SHOP 선택</option>--%>
-                                <%--<c:forEach items="${shopList}" var="shop">--%>
-                                <%--<option value="${shop.shopNo}">${shop.shopName}</option>--%>
-                                <%--</c:forEach>--%>
-                                <%--</select>--%>
-                                <%--</div>--%>
+                                <input hidden="true" id="productNo">
+                                <div class="form-group">
+                                    <img src="" width="215px", height="215px" id="preview_image">
+                                    <label for="imageFileInput">상품 사진 <br>215x215 사이즈에 최적화 되어 있습니다.</label>
+                                    <input type="file" id="imageFileInput">
+                                    <p id="status" class="help-block">상품 이미지 파일을 업로드 해주세요.</p>
+                                </div>
                                 <div class="form-group">
                                     <label for="category">카테고리</label>
                                     <select id="category" class="form-control">
@@ -80,12 +78,6 @@
                                     <label for="nameKr">상품명(한글)</label>
                                     <input type="text" class="form-control" id="nameKr">
                                 </div>
-                                <div class="form-group">
-                                    <label for="imageFileInput">상품 사진 (215x215 최적화)</label>
-                                    <input type="file" id="imageFileInput">
-                                    <p id="status" class="help-block">상품 이미지 파일을 업로드 해주세요.</p>
-                                    <img src="" width="215px", height="215px" id="preview_image">
-                                </div>
                                 <div>
                                     <label for="stock">재고</label>
                                     <input type="text" id="stock">
@@ -93,6 +85,10 @@
                                 <div>
                                     <label for="price">가격</label>
                                     <input type="text" id="price">
+                                </div>
+                                <div>
+                                    <label for="unit">단위</label>
+                                    <input type="text" id="unit">
                                 </div>
                                 <div>
                                     <label for="desc">상품 설명</label>
@@ -104,7 +100,7 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="submit" form="register_product_form" class="btn btn-default">추가</button>
+                    <button type="submit" form="register_product_form" class="btn btn-default" id="submitBtn">추가</button>
                 </div>
             </div>
         </div>
@@ -124,6 +120,7 @@
     }
 
     sImageUrl = '';
+    bIsUpdate = false;
     var appId = '652364014913917';
     var roleArn = 'arn:aws:iam::764006455036:role/adminLoginROle';
     var token = getFacebookTocken();
@@ -149,7 +146,6 @@
             var file = this.files[0];
             var result = document.getElementById('status');
             if (file) {
-                debugger;
                 result.innerHTML = "";
                 var date = new Date();
                 //TODO : 추후에 추가될 상품 ID로 변경 검토
@@ -192,21 +188,29 @@
 
     $('#register_product_form').submit(function (e) {
         e.preventDefault();
+        var descText = escape($('#desc').val());
 
         var data = {
-
+            productNo: $('#productNo').val(),
             productName: $('#name').val(),
             productNameKr: $('#nameKr').val(),
             productCategory: $('#category').val(),
             imageUrl: sImageUrl,
             stock: $('#stock').val(),
             price: $('#price').val(),
-            descText: $('#desc').val()
+            descText: descText,
+            unit: $('#unit').val()
+        }
+
+        var method = 'POST';
+
+        if(bIsUpdate) {
+            method = 'PUT'; // 업데이트 인 경우
         }
 
         $.ajax({
             url: "/product",
-            type: "POST",
+            type: method,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
             success: function (data) {
@@ -220,6 +224,46 @@
         });
     });
 
+
+    function detailView(no) {
+        bIsUpdate = true;
+        $('#submitBtn').text('수정');
+
+
+        <c:forEach var="item" items="${productList}" varStatus="status">
+        var index = ${status.index};
+        var descText = unescape('${item.descText}');
+        if(index == no -1) {
+            $('#productNo').val('${item.productNo}');
+            $('#name').val('${item.productName}');
+            $('#nameKr').val('${item.productNameKr}');
+            $("#category").val('${item.productCategory}').attr("selected", "selected");
+            $('#preview_image').attr("src", '${item.imageUrl}');
+            sImageUrl = '${item.imageUrl}';
+            $('#stock').val('${item.stock}');
+            $('#price').val('${item.price}');
+            $('#desc').val(descText);
+            $('#unit').val('${item.unit}');
+        }
+        </c:forEach>
+
+        $('#regist_modal').modal();
+    }
+
+    function registNewProduct() {
+        bIsUpdate = false;
+        $('#submitBtn').text('추가');
+        $('#name').val('');
+        $('#nameKr').val('');
+        $("#category").val('-1').attr("selected", "selected");
+        $('#preview_image').attr("src", '');
+        sImageUrl = '';
+        $('#stock').val('');
+        $('#price').val('');
+        $('#desc').val('');
+        $('#unit').val('');
+        $('#productNo').val('');
+    }
 </script>
 </body>
 </html>
