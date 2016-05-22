@@ -58,8 +58,8 @@
                                     <input type="text" class="form-control" id="nameKr">
                                 </div>
                                 <div class="form-group">
-                                    <label for="imageFile">상품 사진</label>
-                                    <input type="file" id="imageFile">
+                                    <label for="imageFileInput">상품 사진</label>
+                                    <input type="file" id="imageFileInput">
                                     <p id="status" class="help-block">상품 이미지 파일을 업로드 해주세요.</p>
                                     <img src="" id="preview_image">
                                 </div>
@@ -96,7 +96,7 @@
     sImageUrl = '';
     var appId = '652364014913917';
     var roleArn = 'arn:aws:iam::764006455036:role/adminLoginROle';
-    AWS.config.region = 'ap-northeast-2';
+
     var fbUserId;
     var bucket = new AWS.S3({
         params: {
@@ -135,9 +135,37 @@
 //    }
 
     $(function () {
-        $("#imageFile").on('change', function () {
-            readURL(this);
 
+        $('#imageFileInput').on('change', function() {
+            readURL(this);
+            var file = this.files[0];
+            var result = document.getElementById('status');
+            if (file) {
+                debugger;
+                result.innerHTML = "";
+                var date = new Date();
+                var fileSufix = date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getSeconds() + date.getMilliseconds();
+                var objKey = 'pdbimg-' + fileSufix; // 중복 피하기 위해
+                var params = {
+                    Key: objKey, ContentType: file.type, Body: file, ACL: "public-read"
+                };
+                bucket.putObject(params, function (err, data) {
+                    if (err) {
+                        result.innerHTML = 'ERROR: ' + err;
+                    } else {
+                        // upload success
+                        sImageUrl = bucket.endpoint.href + bucket + '/' + objKey;
+                        alert('이미지 업로드 성공, ' + sImageUrl);
+                    }
+                });
+            } else {
+                results.innerHTML = 'Nothing to upload..';
+            }
+        });
+
+        $('#imageFile').on('change', function () {
+            readURL(this);
+            alert('hoo');
             var file = this.files[0];
 
             var result = document.getElementById('status');
@@ -163,6 +191,8 @@
         }, false);
     });
 
+
+
     function readURL(input) {
         if (input.files && input.files[0]) {
             var reader = new FileReader();
@@ -175,54 +205,55 @@
         }
     }
 
-    $('#register_product_form').submit(function (e) {
-        e.preventDefault();
+//    $('#register_product_form').submit(function (e) {
+//        e.preventDefault();
+//
+//        var data = {
+//
+//            productName: $('#name').val(),
+//            productNameKr: $('#nameKr').val(),
+//            productCategory: $('#category').val(),
+//            imageUrl: sImageUrl,
+//            stock: $('#stock').val(),
+//            price: $('#price').val(),
+//            descText: $('#desc').val()
+//        }
+//
+//        $.ajax({
+//            url: "/product",
+//            type: "POST",
+//            data: JSON.stringify(data),
+//            contentType: "application/json; charset=utf-8",
+//            success: function (data) {
+//                alert("등록 되었습니다.");
+//                //추가된 항목을 리스트에 추가하기 위해 reload
+//                location.reload(true);
+//            },
+//            error: function (request, status, error) {
+//                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+//            }
+//        });
+//    });
 
-        var data = {
-
-            productName: $('#name').val(),
-            productNameKr: $('#nameKr').val(),
-            productCategory: $('#category').val(),
-            imageUrl: sImageUrl,
-            stock: $('#stock').val(),
-            price: $('#price').val(),
-            descText: $('#desc').val()
-        }
-
-        $.ajax({
-            url: "/product",
-            type: "POST",
-            data: JSON.stringify(data),
-            contentType: "application/json; charset=utf-8",
-            success: function (data) {
-                alert("등록 되었습니다.");
-                //추가된 항목을 리스트에 추가하기 위해 reload
-                location.reload(true);
-            },
-            error: function (request, status, error) {
-                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-            }
-        });
-    });
 
 
     window.fbAsyncInit = function () {
-
         FB.init({
             appId: appId
         });
 
-//        FB.login(function (response) {
-//            bucket.config.credentials = new AWS.WebIdentityCredentials({
-//                ProviderId: 'graph.facebook.com',
-//                RoleArn: roleArn,
-//                WebIdentityToken: response.authResponse.accessToken
-//            });
-//
-//            fbUserId = response.authResponse.userID;
-//
-////            button.style.display = 'block';
-//        });
+        FB.login(function (response) {
+            bucket.config.credentials = new AWS.WebIdentityCredentials({
+                ProviderId: 'graph.facebook.com',
+                RoleArn: roleArn,
+                WebIdentityToken: response.authResponse.accessToken
+            });
+            AWS.config.region = 'ap-northeast-2';
+
+            fbUserId = response.authResponse.userID;
+
+//            button.style.display = 'block';
+        });
 
     };
 

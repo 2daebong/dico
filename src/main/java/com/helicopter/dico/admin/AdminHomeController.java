@@ -1,6 +1,8 @@
 package com.helicopter.dico.admin;
 
+import com.helicopter.dico.common.product.entity.Product;
 import com.helicopter.dico.common.product.enums.ProductCategoryEnum;
+import com.helicopter.dico.common.product.service.ProductService;
 import com.helicopter.dico.common.shop.entity.Shop;
 import com.helicopter.dico.common.shop.service.ShopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,8 @@ public class AdminHomeController {
 
     @Autowired
     private ShopService shopService;
+    @Autowired
+    private ProductService productService;
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
     public ModelAndView adminIndex() {
@@ -36,8 +40,8 @@ public class AdminHomeController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("product");
 
-        List<Shop> shopList = shopService.getShopList();
-        mv.addObject("shopList", shopList);
+        List<Product> productList = productService.getProductList();
+        mv.addObject("productList", productList);
 
         List<ProductCategoryEnum> categoryList = new ArrayList<>();
         for(ProductCategoryEnum enums : ProductCategoryEnum.values()){
