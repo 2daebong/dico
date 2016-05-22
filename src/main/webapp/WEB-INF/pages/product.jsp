@@ -146,7 +146,7 @@
                     } else {
                         // upload success
                         sImageUrl = bucket.endpoint.href + 'dicos3' + '/' + objKey;
-                        results.innerHTML = '이미지 업로드 성공, ' + sImageUrl;
+                        result.innerHTML = '이미지 업로드 성공, ' + sImageUrl;
                     }
                 });
             } else {
