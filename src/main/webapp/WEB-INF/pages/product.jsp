@@ -112,7 +112,7 @@
             Bucket: 'dicos3'
         }
     });
-     bucket.config.credentials = new AWS.WebIdentityCredentials({
+    AWS.config.credentials = new AWS.WebIdentityCredentials({
         ProviderId: 'graph.facebook.com',
         RoleArn: roleArn,
         WebIdentityToken: token
