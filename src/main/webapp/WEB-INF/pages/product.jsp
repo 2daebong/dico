@@ -153,7 +153,7 @@
                         result.innerHTML = 'ERROR: ' + err;
                     } else {
                         // upload success
-                        sImageUrl = bucket.endpoint.href + BUCKET_NAME + '/' + objKey;
+                        sImageUrl = bucket.endpoint.href + bucket + '/' + objKey;
                         alert('이미지 업로드 성공, ' + sImageUrl);
                     }
                 });
@@ -179,6 +179,7 @@
         e.preventDefault();
 
         var data = {
+
             productName: $('#name').val(),
             productNameKr: $('#nameKr').val(),
             productCategory: $('#category').val(),
@@ -211,17 +212,17 @@
             appId: appId
         });
 
-        FB.login(function (response) {
-            bucket.config.credentials = new AWS.WebIdentityCredentials({
-                ProviderId: 'graph.facebook.com',
-                RoleArn: roleArn,
-                WebIdentityToken: response.authResponse.accessToken
-            });
-
-            fbUserId = response.authResponse.userID;
-
-//            button.style.display = 'block';
-        });
+//        FB.login(function (response) {
+//            bucket.config.credentials = new AWS.WebIdentityCredentials({
+//                ProviderId: 'graph.facebook.com',
+//                RoleArn: roleArn,
+//                WebIdentityToken: response.authResponse.accessToken
+//            });
+//
+//            fbUserId = response.authResponse.userID;
+//
+////            button.style.display = 'block';
+//        });
 
     };
 
