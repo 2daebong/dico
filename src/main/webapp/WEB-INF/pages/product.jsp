@@ -15,6 +15,29 @@
             등록
         </button>
 
+        <table class="table" style="margin-top: 15px">
+            <tr>
+                <td>No</td>
+                <td>사진</td>
+                <td>카테고리</td>
+                <td>상품명</td>
+                <td>등록일시</td>
+                <td>가격</td>
+                <td>재고</td>
+            </tr>
+            <c:forEach var="item" items="${productList}">
+                <tr>
+                    <td>${item.productNo}</td>
+                    <td><img src="${item.imageUrl}" width="150px" height="100px"></td>
+                    <td>${item.productCategory}</td>
+                    <td>${item.productNameKr}</td>
+                    <td>${item.registYmdt}</td>
+                    <td>${item.price}</td>
+                    <td>${item.stock}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
     </div>
 
     <!-- Product 등록 Modal -->
@@ -58,7 +81,7 @@
                                     <input type="text" class="form-control" id="nameKr">
                                 </div>
                                 <div class="form-group">
-                                    <label for="imageFileInput">상품 사진</label>
+                                    <label for="imageFileInput">상품 사진 (215x215 최적화)</label>
                                     <input type="file" id="imageFileInput">
                                     <p id="status" class="help-block">상품 이미지 파일을 업로드 해주세요.</p>
                                     <img src="" width="215px", height="215px" id="preview_image">
@@ -167,35 +190,35 @@
         }
     }
 
-//    $('#register_product_form').submit(function (e) {
-//        e.preventDefault();
-//
-//        var data = {
-//
-//            productName: $('#name').val(),
-//            productNameKr: $('#nameKr').val(),
-//            productCategory: $('#category').val(),
-//            imageUrl: sImageUrl,
-//            stock: $('#stock').val(),
-//            price: $('#price').val(),
-//            descText: $('#desc').val()
-//        }
-//
-//        $.ajax({
-//            url: "/product",
-//            type: "POST",
-//            data: JSON.stringify(data),
-//            contentType: "application/json; charset=utf-8",
-//            success: function (data) {
-//                alert("등록 되었습니다.");
-//                //추가된 항목을 리스트에 추가하기 위해 reload
-//                location.reload(true);
-//            },
-//            error: function (request, status, error) {
-//                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-//            }
-//        });
-//    });
+    $('#register_product_form').submit(function (e) {
+        e.preventDefault();
+
+        var data = {
+
+            productName: $('#name').val(),
+            productNameKr: $('#nameKr').val(),
+            productCategory: $('#category').val(),
+            imageUrl: sImageUrl,
+            stock: $('#stock').val(),
+            price: $('#price').val(),
+            descText: $('#desc').val()
+        }
+
+        $.ajax({
+            url: "/product",
+            type: "POST",
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                alert("등록 되었습니다.");
+                //추가된 항목을 리스트에 추가하기 위해 reload
+                location.reload(true);
+            },
+            error: function (request, status, error) {
+                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    });
 
 </script>
 </body>

@@ -17,6 +17,9 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long productNo;
 
+    @NotNull @Enumerated(EnumType.STRING)
+    private ProductCategoryEnum productCategory;
+
     @NotNull
     private String productNameKr;
 
@@ -27,9 +30,6 @@ public class Product {
     private int price;
 
     private Long shopNo;
-
-    @NotNull @Enumerated(EnumType.STRING)
-    private ProductCategoryEnum productCategory;
 
     private String imageUrl;
 
