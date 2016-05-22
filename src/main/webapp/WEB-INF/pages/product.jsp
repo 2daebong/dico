@@ -61,7 +61,7 @@
                                     <label for="imageFileInput">상품 사진</label>
                                     <input type="file" id="imageFileInput">
                                     <p id="status" class="help-block">상품 이미지 파일을 업로드 해주세요.</p>
-                                    <img src="" id="preview_image">
+                                    <img src="" width="215px", height="215px" id="preview_image">
                                 </div>
                                 <div>
                                     <label for="stock">재고</label>
@@ -129,8 +129,14 @@
                 debugger;
                 result.innerHTML = "";
                 var date = new Date();
-                var fileSufix = date.getYear() + date.getMonth() + date.getDay() + date.getHours() + date.getSeconds() + date.getMilliseconds();
-                var objKey = 'pdbimg-' + fileSufix; // 중복 피하기 위해
+                //TODO : 추후에 추가될 상품 ID로 변경 검토
+                var fileSufix = date.getYear() + "_" +
+                        date.getMonth() + "_" +
+                        date.getDay() + "_" +
+                        date.getHours() + "_" +
+                        date.getSeconds() + "_" +
+                        date.getMilliseconds();
+                var objKey = 'product-img-' + fileSufix; // 중복 피하기 위해
                 var params = {
                     Key: objKey, ContentType: file.type, Body: file, ACL: "public-read"
                 };
@@ -139,8 +145,8 @@
                         result.innerHTML = 'ERROR: ' + err;
                     } else {
                         // upload success
-                        sImageUrl = bucket.endpoint.href + bucket + '/' + objKey;
-                        alert('이미지 업로드 성공, ' + sImageUrl);
+                        sImageUrl = bucket.endpoint.href + 'dicos3' + '/' + objKey;
+                        results.innerHTML = '이미지 업로드 성공, ' + sImageUrl;
                     }
                 });
             } else {
