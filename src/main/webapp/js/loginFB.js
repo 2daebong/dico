@@ -1,9 +1,11 @@
 
-function saveLogin(token) {
+function saveLogin(userName, token) {
     if(token != "") {
         setCookie("dico_FB_user_info", token, 7);
+        setCookie("dico_user_name", userName, 7);
     } else {
         setCookie("dico_FB_user_info", token, -1);
+        setCookie("dico_user_name", userName, -1);
     }
 }
 
@@ -51,7 +53,16 @@ function getCookie(cookieName) {
 
 function isNotLogin() {
     var token = getCookie('dico_FB_user_info');
-    if(token) {
+    if(token == "" || token == null || token == undefined) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function isLogin() {
+    var token = getCookie('dico_FB_user_info');
+    if(token == "" || token == null || token == undefined) {
         return false;
     } else {
         return true;
@@ -60,4 +71,8 @@ function isNotLogin() {
 
 function getFacebookTocken() {
     return getCookie('dico_FB_user_info');
+}
+
+function getUserName() {
+    return getCookie('dico_user_name');
 }

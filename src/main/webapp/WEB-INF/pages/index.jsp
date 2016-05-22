@@ -12,11 +12,11 @@
         <div class="main_text">
             <h1>DICO ADMIN</h1>
             <br>
-            <p><strong>페이스북 ID로 로그인하여 시작하세요!</strong></p>
+            <p id="status"><strong>페이스북 ID로 로그인하여 시작하세요!</strong></p>
+            <div id="FB_login">
             <fb:login-button scope="public_profile,email" size="xlarge" onlogin="checkLoginState();">
             </fb:login-button>
 
-            <div id="status">
             </div>
         </div>
     </div>
@@ -26,6 +26,11 @@
 <script src="/js/loginFB.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
+        if(isLogin()) {
+            updateLoginInfo(getUserName());
+            $('#FB_login').hide();
+        }
+
         $.ajaxSetup({ cache: true });
         $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
             FB.init({
@@ -45,8 +50,7 @@
         // for FB.getLoginStatus().
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
-            testAPI();
-            saveLogin(response.authResponse.accessTocken);
+            dicoLogin();
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +
@@ -65,13 +69,17 @@
         });
     }
 
-    function testAPI() {
+    function dicoLogin(token) {
         console.log('Welcome!  Fetching your information.... ');
         FB.api('/me', function(response) {
             console.log('Successful login for: ' + response.name);
-            document.getElementById('status').innerHTML =
-                    'Thanks for logging in, ' + response.name + '!';
+            updateLoginInfo(response.name);
+            saveLogin(response.name, token);
         });
+    }
+
+    function updateLoginInfo(name) {
+        document.getElementById('status').innerHTML ='Thanks for logging in, ' + name + '!';
     }
 </script>
 
