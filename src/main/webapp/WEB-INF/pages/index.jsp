@@ -23,18 +23,17 @@
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/loginFB.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        // Execute some code here
-    });
-
-    $.ajaxSetup({ cache: true });
-    $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-        FB.init({
-            appId      : '652364014913917',
-            xfbml      : true,
-            version    : 'v2.6'
-        });
+        $.ajaxSetup({ cache: true });
+        $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+            FB.init({
+                appId      : '652364014913917',
+                xfbml      : true,
+                version    : 'v2.6'
+            });
+        });$.ajaxSetup({ cache: true });
     });
 
     function statusChangeCallback(response) {
@@ -47,6 +46,7 @@
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
             testAPI();
+            saveLogin(response.authResponse.accessTocken);
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +

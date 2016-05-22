@@ -90,52 +90,37 @@
 
 <script src="/js/jquery-1.12.2.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
+<script src="/js/loginFB.js"></script>
 <script src="https://sdk.amazonaws.com/js/aws-sdk-2.3.11.min.js"></script>
 
 <script type="text/javascript">
+    if(isNotLogin()) {
+        alert('로그인이 필요합니다.');
+
+        location.href='/admin';
+    }
+
     sImageUrl = '';
     var appId = '652364014913917';
     var roleArn = 'arn:aws:iam::764006455036:role/adminLoginROle';
-
+    var token = getFacebookTocken();
     var fbUserId;
+
+    AWS.config.region = 'ap-northeast-2';
     var bucket = new AWS.S3({
         params: {
             Bucket: 'dicos3'
         }
     });
+     bucket.config.credentials = new AWS.WebIdentityCredentials({
+        ProviderId: 'graph.facebook.com',
+        RoleArn: roleArn,
+        WebIdentityToken: token
+    });
 
     $('.dropdown-toggle').dropdown();
 
-//    function statusChangeCallback(response) {
-//        console.log('statusChangeCallback');
-//        console.log(response);
-//        // The response object is returned with a status field that lets the
-//        // app know the current login status of the person.
-//        // Full docs on the response object can be found in the documentation
-//        // for FB.getLoginStatus().
-//        if (response.status === 'connected') {
-//            // Logged into your app and Facebook.
-//            testAPI();
-//        } else if (response.status === 'not_authorized') {
-//            // The person is logged into Facebook, but not your app.
-//            document.getElementById('status').innerHTML = 'Please log ' +
-//                    'into this app.';
-//        } else {
-//            // The person is not logged into Facebook, so we're not sure if
-//            // they are logged into this app or not.
-//            document.getElementById('status').innerHTML = 'Please log ' +
-//                    'into Facebook.';
-//        }
-//    }
-//
-//    function checkLoginState() {
-//        FB.getLoginStatus(function (response) {
-//            statusChangeCallback(response);
-//        });
-//    }
-
     $(function () {
-
         $('#imageFileInput').on('change', function() {
             readURL(this);
             var file = this.files[0];
@@ -162,36 +147,7 @@
                 results.innerHTML = 'Nothing to upload..';
             }
         });
-
-        $('#imageFile').on('change', function () {
-            readURL(this);
-            alert('hoo');
-            var file = this.files[0];
-
-            var result = document.getElementById('status');
-            if (file) {
-                result.innerHTML = "";
-                var date = new Date();
-                var objKey = 'pdbimg-' + file.name + "_" + date.getMilliseconds(); // 중복 피하기 위해
-                var params = {
-                    Key: objKey, ContentType: file.type, Body: file, ACL: "public-read"
-                };
-                bucket.putObject(params, function (err, data) {
-                    if (err) {
-                        result.innerHTML = 'ERROR: ' + err;
-                    } else {
-                        // upload success
-                        sImageUrl = bucket.endpoint.href + bucket + '/' + objKey;
-                        alert('이미지 업로드 성공, ' + sImageUrl);
-                    }
-                });
-            } else {
-                results.innerHTML = 'Nothing to upload..';
-            }
-        }, false);
     });
-
-
 
     function readURL(input) {
         if (input.files && input.files[0]) {
@@ -235,44 +191,6 @@
 //        });
 //    });
 
-
-
-    window.fbAsyncInit = function () {
-        FB.init({
-            appId: appId
-        });
-
-        FB.login(function (response) {
-            bucket.config.credentials = new AWS.WebIdentityCredentials({
-                ProviderId: 'graph.facebook.com',
-                RoleArn: roleArn,
-                WebIdentityToken: response.authResponse.accessToken
-            });
-            AWS.config.region = 'ap-northeast-2';
-
-            fbUserId = response.authResponse.userID;
-
-//            button.style.display = 'block';
-        });
-
-    };
-
-    // Load the Facebook SDK asynchronously
-
-    (function (d, s, id) {
-        var js, fjs = d.getElementsByTagName(s)[0];
-        if (d.getElementById(id)) {
-            return;
-        }
-
-        js = d.createElement(s);
-        js.id = id;
-        js.src = "//connect.facebook.net/en_US/all.js";
-        fjs.parentNode.insertBefore(js, fjs);
-    }(document, 'script', 'facebook-jssdk'));
-
 </script>
-<%--<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">--%>
-<%--</fb:login-button>--%>
 </body>
 </html>
