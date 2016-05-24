@@ -26,10 +26,6 @@
 <script src="/js/loginFB.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
-        if(isLogin()) {
-            updateLoginInfo(getUserName());
-            $('#FB_login').hide();
-        }
 
         $.ajaxSetup({ cache: true });
         $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
@@ -39,6 +35,11 @@
                 version    : 'v2.6'
             });
         });$.ajaxSetup({ cache: true });
+
+        if(isLogin() && checkLoginState()) {
+            updateLoginInfo(getUserName());
+            $('#FB_login').hide();
+        }
     });
 
     function statusChangeCallback(response) {
@@ -51,15 +52,18 @@
         if (response.status === 'connected') {
             // Logged into your app and Facebook.
             dicoLogin(response.authResponse.accessToken);
+            return true;
         } else if (response.status === 'not_authorized') {
             // The person is logged into Facebook, but not your app.
             document.getElementById('status').innerHTML = 'Please log ' +
                     'into this app.';
+            return false;
         } else {
             // The person is not logged into Facebook, so we're not sure if
             // they are logged into this app or not.
             document.getElementById('status').innerHTML = 'Please log ' +
                     'into Facebook.';
+            return false;
         }
     }
 
