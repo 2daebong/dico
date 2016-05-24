@@ -67,6 +67,9 @@ public class AdminHomeController {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("test");
 
+        List<Product> productList = productService.getProductList();
+        mv.addObject("productList", productList);
+
         return mv;
     }
 

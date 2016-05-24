@@ -1,4 +1,4 @@
-package com.helicopter.dico.api.cart.entity;
+package com.helicopter.dico.common.cart.entity;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -8,11 +8,11 @@ import javax.validation.constraints.NotNull;
  */
 @Entity
 @Table(name = "tb_cart")
-@Deprecated
 public class Cart {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long cartNo;
+    private Long cartSeq;
 
     @NotNull
     private String userId;
@@ -27,12 +27,12 @@ public class Cart {
 
     private String updateYmdt;
 
-    public Long getCartNo() {
-        return cartNo;
+    public Long getCartSeq() {
+        return cartSeq;
     }
 
-    public void setCartNo(Long cartNo) {
-        this.cartNo = cartNo;
+    public void setCartSeq(Long cartSeq) {
+        this.cartSeq = cartSeq;
     }
 
     public String getUserId() {
@@ -51,6 +51,14 @@ public class Cart {
         this.productNo = productNo;
     }
 
+    public int getAmount() {
+        return amount;
+    }
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
     public String getRegistYmdt() {
         return registYmdt;
     }
@@ -65,13 +73,5 @@ public class Cart {
 
     public void setUpdateYmdt(String updateYmdt) {
         this.updateYmdt = updateYmdt;
-    }
-
-    public int getAmount() {
-        return amount;
-    }
-
-    public void setAmount(int amount) {
-        this.amount = amount;
     }
 }

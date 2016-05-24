@@ -162,6 +162,8 @@
                 bucket.putObject(params, function (err, data) {
                     if (err) {
                         result.innerHTML = 'ERROR: ' + err;
+                        alert('facebook 토큰 만료, 로그인 후 재시도 해주세요.');
+                        location.href = "/";
                     } else {
                         // upload success
                         sImageUrl = bucket.endpoint.href + 'dicos3' + '/' + objKey;
