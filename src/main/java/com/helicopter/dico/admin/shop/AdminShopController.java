@@ -19,7 +19,7 @@ public class AdminShopController {
     @Autowired
     private ShopService shopService;
 
-    @RequestMapping(value = "admin/shop", method = RequestMethod.GET)
+    @RequestMapping(value = "/shop", method = RequestMethod.GET)
     public ModelAndView adminShop() {
 
         List<Shop> shopList = shopService.getShopList();
