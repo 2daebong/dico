@@ -10,7 +10,15 @@
 
 <div class="container">
     <div class="main_text">
-        User 유저
+        주문하기 테스트 ( 카트 넣기 + 주문 )
+        <br>
+        1. 상품 리스트 보여줌
+        <br>
+        2. 상품 카트에 담음
+        <br>
+        3. 카트에 담긴거 보여줌
+        <br>
+        4. 주문 하기
     </div>
 </div>
 

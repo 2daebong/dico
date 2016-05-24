@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <link href="/css/bootstrap.min.css" rel="stylesheet" media="screen">
-    <link href="/css/index.css" rel="stylesheet">
+    <link href="/css/header.css" rel="stylesheet">
 </head>
 <body>
     <jsp:include page="header.jsp"/>

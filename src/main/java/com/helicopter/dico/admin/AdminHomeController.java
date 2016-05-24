@@ -5,8 +5,10 @@ import com.helicopter.dico.common.product.enums.ProductCategoryEnum;
 import com.helicopter.dico.common.product.service.ProductService;
 import com.helicopter.dico.common.shop.entity.Shop;
 import com.helicopter.dico.common.shop.service.ShopService;
+import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -56,6 +58,22 @@ public class AdminHomeController {
     public ModelAndView adminUser() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("user");
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/test", method = RequestMethod.GET)
+    public ModelAndView adminTest() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("test");
+
+        return mv;
+    }
+
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public ModelAndView adminOrder() {
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("order");
 
         return mv;
     }

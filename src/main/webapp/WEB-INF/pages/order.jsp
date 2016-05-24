@@ -10,7 +10,7 @@
 
 <div class="container">
     <div class="main_text">
-        User 유저
+       작성된 주문 리스트를 보여주는 페이지
     </div>
 </div>
 
