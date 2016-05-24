@@ -16,22 +16,22 @@ public class ProductController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/product", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/product", method = RequestMethod.GET)
     public Product findProduct(@RequestParam(value = "productName") String productName){
         return productService.getProduct(productName);
     }
 
-    @RequestMapping(value = "/productList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/productList", method = RequestMethod.GET)
     public List<Product> findProductList(){
         return productService.getProductList();
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/product", method = RequestMethod.POST)
     public Product addProduct(@RequestBody Product product){
         return productService.addProduct(product);
     }
 
-    @RequestMapping(value = "/product", method = RequestMethod.PUT)
+    @RequestMapping(value = "/api/product", method = RequestMethod.PUT)
     public void updateProduct(@RequestBody Product product) {
         productService.updateProduct(product);
     }

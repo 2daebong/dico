@@ -16,19 +16,19 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/user/addUser", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user/addUser", method = RequestMethod.POST)
     public User createUser(@RequestBody User user){
 
         return userService.addUser(user);
     }
 
-    @RequestMapping(value="/user", method = RequestMethod.GET)
+    @RequestMapping(value="/api/user", method = RequestMethod.GET)
     public User getUser(@RequestParam(value="userId") String userId){
 
         return userService.getUser(userId);
     }
 
-    @RequestMapping(value="/userList", method = RequestMethod.GET)
+    @RequestMapping(value="/api/userList", method = RequestMethod.GET)
     public List<User> getUserAll(){
 
         return userService.getUserList();

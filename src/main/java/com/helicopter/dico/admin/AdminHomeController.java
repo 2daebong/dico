@@ -25,7 +25,7 @@ public class AdminHomeController {
     @Autowired
     private ProductService productService;
 
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView adminIndex() {
 
         ModelAndView mv = new ModelAndView();
@@ -35,7 +35,7 @@ public class AdminHomeController {
     }
 
 
-    @RequestMapping(value = "admin/product", method = RequestMethod.GET)
+    @RequestMapping(value = "/product", method = RequestMethod.GET)
     public ModelAndView adminProduct() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("product");
@@ -52,7 +52,7 @@ public class AdminHomeController {
         return mv;
     }
 
-    @RequestMapping(value = "/admin/user", method = RequestMethod.GET)
+    @RequestMapping(value = "/user", method = RequestMethod.GET)
     public ModelAndView adminUser() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("user");

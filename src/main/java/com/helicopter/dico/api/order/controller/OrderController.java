@@ -16,17 +16,17 @@ public class OrderController {
     @Autowired
     private OrderService orderService;
 
-    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/order", method = RequestMethod.GET)
     public Order getOrder(@RequestParam Long orderNo){
         return orderService.getOrder(orderNo);
     }
 
-    @RequestMapping(value = "/orderList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/orderList", method = RequestMethod.GET)
     public List<Order> getOrderList() {
         return orderService.getOrderList();
     }
 
-    @RequestMapping(value = "/order/addOrder", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/order/addOrder", method = RequestMethod.POST)
     public Order addOrder(@RequestBody Order order) {
         return orderService.addOrder(order);
     }

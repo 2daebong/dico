@@ -20,17 +20,17 @@ public class ShopController {
     @Autowired
     private ShopService shopService;
 
-    @RequestMapping(value = "/shopList", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/shopList", method = RequestMethod.GET)
     public List<Shop> getShopList() {
         return shopService.getShopList();
     }
 
-    @RequestMapping(value = "/shop/{shopNo}", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/shop/{shopNo}", method = RequestMethod.GET)
     public Shop getShop(@PathVariable("shopNo")Long shopNo) {
         return shopService.getShop(shopNo);
     }
 
-    @RequestMapping(value = "/shop", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/shop", method = RequestMethod.POST)
     public Shop addShop(@RequestBody Shop shop) {
 
         if(logger.isDebugEnabled()){
