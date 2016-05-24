@@ -209,7 +209,7 @@
         }
 
         $.ajax({
-            url: "/product",
+            url: "/api/product",
             type: method,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",

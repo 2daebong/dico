@@ -126,7 +126,7 @@
 
         $.ajax({
             type: "POST",
-            url: "/shop",
+            url: "/api/shop",
             data: JSON.stringify(data),
             success: function(data){
                 alert("등록 되었습니다.");
