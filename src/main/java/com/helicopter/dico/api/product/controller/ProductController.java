@@ -36,4 +36,9 @@ public class ProductController {
         productService.updateProduct(product);
     }
 
+    @RequestMapping(value = "/api/product", method = RequestMethod.DELETE)
+    public void deletePruct(@RequestBody Product product){
+        productService.deleteProduct(product);
+    }
+
 }

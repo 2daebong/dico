@@ -24,6 +24,7 @@
                 <td>등록일시</td>
                 <td>가격</td>
                 <td>재고</td>
+                <td> </td>
             </tr>
             <c:forEach var="item" items="${productList}">
                 <tr class="clickable-row" onclick="detailView(${item.productNo})">
@@ -34,6 +35,7 @@
                     <td>${item.registYmdt}</td>
                     <td><input style="width:70px" value="${item.price}" class="form-control">원</td>
                     <td><input style="width:60px" value="${item.stock}" class="form-control">${item.unit}</td>
+                    <td><button class="form-control btn_del" data-no="${item.productNo}">삭제</button></td>
                 </tr>
             </c:forEach>
         </table>
@@ -266,6 +268,37 @@
         $('#unit').val('');
         $('#productNo').val('');
     }
+
+
+    $(function() {
+        $('.btn_del').on('click', function(e){
+            e.stopPropagation();
+
+            var no = $(this).data('no');
+
+            var data = {
+                productNo: no
+            }
+
+            var method = 'DELETE';
+
+            $.ajax({
+                url: "/api/product",
+                type: method,
+                data: JSON.stringify(data),
+                contentType: "application/json; charset=utf-8",
+                success: function (data) {
+                    alert("삭제 되었습니다.");
+                    //추가된 항목을 리스트에 추가하기 위해 reload
+                    location.reload(true);
+                },
+                error: function (request, status, error) {
+                    alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+                }
+            });
+        });
+    })
+
 </script>
 </body>
 </html>
