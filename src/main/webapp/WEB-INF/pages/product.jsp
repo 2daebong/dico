@@ -233,11 +233,9 @@
         bIsUpdate = true;
         $('#submitBtn').text('수정');
 
-
-        <c:forEach var="item" items="${productList}" varStatus="status">
-        var index = ${status.index};
+        <c:forEach var="item" items="${productList}">
         var descText = unescape('${item.descText}');
-        if(index == no -1) {
+        if(${item.productNo} == no -1) {
             $('#productNo').val('${item.productNo}');
             $('#name').val('${item.productName}');
             $('#nameKr').val('${item.productNameKr}');
