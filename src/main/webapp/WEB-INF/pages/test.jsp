@@ -33,7 +33,7 @@
                 <br>
                 <img src="${item.imageUrl}" width="215px" height="215px"/><br>
                 가격 : <p style="width:120px" class="form-control" disabled="">${item.price}</p>원
-                <textarea style="width:215px" disabled class="form-control" rows="3">${item.descText}</textarea>
+                <textarea style="width:215px" disabled class="form-control textarea_desc" rows="3"></textarea>
                 <br>
                 수량 선택 : <input id="amount_${item.productNo}" class="form-control" value="0">
                 <br>
@@ -46,11 +46,16 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="/js/bootstrap.min.js"></script>
 <script type="text/javascript">
+    $(document).ready(function() {
+        <c:forEach items="${productList}" var="item" varStatus="status">
+        $('.textarea_desc')[${status.index}].value = unescape('${item.descText}');
+        </c:forEach>
+    })
+
     function carting(productNo) {
         var userId = 'admin';
         var tagId = '#amount_' + productNo;
         var amount = $(tagId).val();
-
 
         if(amount <= 0) {
             alert('수량을 1개 이상 입력해주세요.');
