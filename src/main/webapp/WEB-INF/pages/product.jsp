@@ -235,7 +235,7 @@
 
         <c:forEach var="item" items="${productList}">
         var descText = unescape('${item.descText}');
-        if(${item.productNo} == no -1) {
+        if(${item.productNo} == no) {
             $('#productNo').val('${item.productNo}');
             $('#name').val('${item.productName}');
             $('#nameKr').val('${item.productNameKr}');
