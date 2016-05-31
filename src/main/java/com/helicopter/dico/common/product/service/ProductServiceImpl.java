@@ -2,6 +2,8 @@ package com.helicopter.dico.common.product.service;
 
 import com.helicopter.dico.common.product.entity.Product;
 import com.helicopter.dico.common.product.repository.ProductRepository;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,12 +16,19 @@ import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {
 
+    private final static Log LOG = LogFactory.getLog(ProductServiceImpl.class);
+
     @Autowired
     private ProductRepository productRepository;
 
     @Override
     public Product getProduct(String productName){
         return productRepository.findByProductName(productName);
+    }
+
+    @Override
+    public Product getProduct(Long productNo) {
+        return productRepository.findOne(productNo);
     }
 
     @Override
@@ -42,7 +51,12 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public void deleteProduct(Product product) {
-        productRepository.delete(product.getProductNo());
+    public void deleteProduct(Long productNo) {
+        Product targetProduct = productRepository.findOne(productNo);
+        if(targetProduct != null) {
+            productRepository.delete(targetProduct);
+        } else {
+            LOG.error("존재하지 않는 Product No");
+        }
     }
 }

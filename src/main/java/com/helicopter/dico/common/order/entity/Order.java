@@ -1,11 +1,14 @@
 package com.helicopter.dico.common.order.entity;
 
+import com.helicopter.dico.common.cart.model.Cart;
+import com.helicopter.dico.common.cart.model.CartItem;
 import com.helicopter.dico.common.order.enums.DeliveryTypeEnum;
 import com.helicopter.dico.common.order.enums.OrderStatusEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by LeeDaebeom-Mac on 2016. 3. 16..
@@ -20,10 +23,9 @@ public class Order {
     @NotNull
     private String userId;
 
-    private Long shopNo;
+    private String address;
 
-    @NotNull
-    private String productList;
+    private String phone;
 
     @NotNull
     private int totalPrice;
@@ -34,9 +36,28 @@ public class Order {
     @NotNull @Enumerated(EnumType.STRING)
     private DeliveryTypeEnum deliveryType;
 
-    private Date ResitYmdt;
+    private Date registYmdt;
 
     private Date updateYmdt;
+
+    public Order() {
+
+    }
+
+    public Order(Cart userCart) {
+        this.userId = userCart.getUserId();
+        //TODO : 추가해야 할 사항
+//        this.address = userService.getUserAddress(userCart.getUserId());
+//        this.phone = userService.getUserPhone(userCart.getUserId());
+
+        for(CartItem cartItem : userCart.getCartItemMap().values()) {
+            this.totalPrice += cartItem.getProduct().getPrice() * cartItem.getAmount();
+        }
+
+        this.status = OrderStatusEnum.WAIT;
+        this.deliveryType = DeliveryTypeEnum.DELIVERY;
+        this.registYmdt = new Date();
+    }
 
     public Long getOrderNo() {
         return orderNo;
@@ -54,44 +75,12 @@ public class Order {
         this.userId = userId;
     }
 
-    public String getProductList() {
-        return productList;
-    }
-
-    public void setProductList(String productList) {
-        this.productList = productList;
-    }
-
     public int getTotalPrice() {
         return totalPrice;
     }
 
     public void setTotalPrice(int totalPrice) {
         this.totalPrice = totalPrice;
-    }
-
-    public Date getResitYmdt() {
-        return ResitYmdt;
-    }
-
-    public void setResitYmdt(Date resitYmdt) {
-        ResitYmdt = resitYmdt;
-    }
-
-    public Date getUpdateYmdt() {
-        return updateYmdt;
-    }
-
-    public void setUpdateYmdt(Date updateYmdt) {
-        this.updateYmdt = updateYmdt;
-    }
-
-    public Long getShopNo() {
-        return shopNo;
-    }
-
-    public void setShopNo(Long shopNo) {
-        this.shopNo = shopNo;
     }
 
     public OrderStatusEnum getStatus() {
@@ -108,5 +97,21 @@ public class Order {
 
     public void setDeliveryType(DeliveryTypeEnum deliveryType) {
         this.deliveryType = deliveryType;
+    }
+
+    public Date getRegistYmdt() {
+        return registYmdt;
+    }
+
+    public void setRegistYmdt(Date registYmdt) {
+        this.registYmdt = registYmdt;
+    }
+
+    public Date getUpdateYmdt() {
+        return updateYmdt;
+    }
+
+    public void setUpdateYmdt(Date updateYmdt) {
+        this.updateYmdt = updateYmdt;
     }
 }

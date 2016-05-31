@@ -13,7 +13,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/">Home</a></li>
+                <li><a href="/">Home</a></li>
                 <li><a href="/shop">매장</a></li>
                 <li><a href="/product">상품</a></li>
                 <li><a href="/user">사용자</a></li>
@@ -23,3 +23,10 @@
         </div><!--/.nav-collapse -->
     </div>
 </nav>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript">
+    $('.nav li').click(function(e) {
+        $('.active').removeClass('active');
+        $(this).addClass('active');
+    });
+</script>

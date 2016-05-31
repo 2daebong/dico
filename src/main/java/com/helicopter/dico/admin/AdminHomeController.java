@@ -1,14 +1,15 @@
 package com.helicopter.dico.admin;
 
+import com.helicopter.dico.common.cart.service.CartService;
+import com.helicopter.dico.common.order.entity.Order;
+import com.helicopter.dico.common.order.service.OrderService;
 import com.helicopter.dico.common.product.entity.Product;
 import com.helicopter.dico.common.product.enums.ProductCategoryEnum;
 import com.helicopter.dico.common.product.service.ProductService;
-import com.helicopter.dico.common.shop.entity.Shop;
 import com.helicopter.dico.common.shop.service.ShopService;
-import org.omg.CORBA.Request;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
@@ -20,12 +21,17 @@ import java.util.List;
  * Created by LeeDaebeom-Mac on 2016. 3. 27..
  */
 @Controller
+@Scope("session")
 public class AdminHomeController {
 
     @Autowired
     private ShopService shopService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private CartService cartService;
+    @Autowired
+    private OrderService orderService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public ModelAndView adminIndex() {
@@ -77,6 +83,11 @@ public class AdminHomeController {
     public ModelAndView adminOrder() {
         ModelAndView mv = new ModelAndView();
         mv.setViewName("order");
+
+
+        List<Order> orderList = orderService.getOrderListByUser("admin");
+
+        mv.addObject(orderList);
 
         return mv;
     }

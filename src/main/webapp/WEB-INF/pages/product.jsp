@@ -157,7 +157,7 @@
                         date.getHours() + "_" +
                         date.getSeconds() + "_" +
                         date.getMilliseconds();
-                var objKey = 'product-img-' + fileSufix; // 중복 피하기 위해
+                var objKey = 'products-img-' + fileSufix; // 중복 피하기 위해
                 var params = {
                     Key: objKey, ContentType: file.type, Body: file, ACL: "public-read"
                 };
@@ -213,7 +213,7 @@
         }
 
         $.ajax({
-            url: "/api/product",
+            url: "/api/products",
             type: method,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
@@ -281,7 +281,7 @@
             var method = 'DELETE';
 
             $.ajax({
-                url: "/api/product",
+                url: "/api/products",
                 type: method,
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",

@@ -25,8 +25,24 @@
         <br>
         5. 주문 탭에서 확인
     </div>
+    <div class="cart_bar" style="background-color: #faf2cc; height: 300px;">
+        <p style="font-size: 20px"><strong>${sessionScope.cart.userId} 사용자 카트 정보</strong><p/>
+            <br>
+        <button class="brn btn-danger" style="width: 150px;" onclick="doOrder();">
+            주문하기
+        </button>
+        <br>
+        <c:forEach var="item" items="${sessionScope.cartItemList}">
+            <div style="float: left;">
+                <p>${item.product.productNameKr}</p>
+                <img src="${item.product.imageUrl}" width="120px" height="120px"/>
+                <p>수량 : ${item.amount}</p>
+                <p>가격 : ${item.amount * item.product.price}원</p>
+            </div>
+        </c:forEach>
+    </div>
 
-    <div>
+    <div style="margin-top: 50px">
         <c:forEach items="${productList}" var="item">
             <div style="float:left; margin-left:20px;">
                 ${item.productNameKr}
@@ -50,41 +66,55 @@
         <c:forEach items="${productList}" var="item" varStatus="status">
         $('.textarea_desc')[${status.index}].value = unescape('${item.descText}');
         </c:forEach>
-    })
+    });
+
+    var userId = 'admin';
+
+    function doOrder() {
+        $.ajax({
+            url: "/api/order/cart",
+            data: userId,
+            type: 'POST',
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                alert('주문 완료.\n 주문 페이지로 이동합니다.');
+                location.href = "/order";
+            },
+            error: function (request, status, error) {
+                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
+    }
 
     function carting(productNo) {
-        var userId = 'admin';
         var tagId = '#amount_' + productNo;
         var amount = $(tagId).val();
 
         if(amount <= 0) {
             alert('수량을 1개 이상 입력해주세요.');
+            return;
         }
 
-        var ajaxRequestUrl = "/api/cart/" + userId;
         var data = {
             'userId' : userId,
-            'productNo' : productNo,
-            'amount' : amount
+            'amount' : amount,
+            'productNo' : productNo
         }
 
-        console.log(userId + '사용자 , ' + productNo + '번 상품,' + amount + '개 카트 담기 시도.');
-
-
-//        $.ajax({
-//            url: ajaxRequestUrl,
-//            type: 'POST',
-//            data: JSON.stringify(data),
-//            contentType: "application/json; charset=utf-8",
-//            success: function (data) {
-//                alert("등록 되었습니다.");
-//                //추가된 항목을 리스트에 추가하기 위해 reload
-//                location.reload(true);
-//            },
-//            error: function (request, status, error) {
-//                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
-//            }
-//        });
+//        console.log(userId + '사용자 , ' + productNo + '번 상품,' + amount + '개 카트 담기 시도.');
+        $.ajax({
+            url: "/api/cart",
+            type: 'POST',
+            data: JSON.stringify(data),
+            contentType: "application/json; charset=utf-8",
+            success: function (data) {
+                //추가된 항목을 리스트에 추가하기 위해 reload
+                location.reload(true);
+            },
+            error: function (request, status, error) {
+                alert("fail. code:" + request.status + "\n" + "message:" + request.responseText + "\n" + "error:" + error);
+            }
+        });
     }
 </script>
 </body>
