@@ -21,7 +21,8 @@ public class OrderController {
 
     @RequestMapping(value = "/api/order", method = RequestMethod.GET)
     public Order getOrder(@RequestParam Long orderNo){
-        return orderService.getOrder(orderNo);
+        Order order = orderService.getOrder(orderNo);
+        return order;
     }
 
     @RequestMapping(value = "/api/orderList", method = RequestMethod.GET)

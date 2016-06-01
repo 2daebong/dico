@@ -25,7 +25,7 @@
         <br>
         5. 주문 탭에서 확인
     </div>
-    <div class="cart_bar" style="background-color: #faf2cc; height: 300px;">
+    <div class="cart_bar" style="background-color: #afd9ee; height: 300px;">
         <p style="font-size: 20px"><strong>${sessionScope.cart.userId} 사용자 카트 정보</strong><p/>
             <br>
         <button class="brn btn-danger" style="width: 150px;" onclick="doOrder();">

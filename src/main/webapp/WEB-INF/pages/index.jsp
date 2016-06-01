@@ -6,7 +6,7 @@
     <link href="/css/header.css" rel="stylesheet">
 </head>
 <body>
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="header.jsp" flush="false"/>
 
     <div class="container">
         <div class="main_text">

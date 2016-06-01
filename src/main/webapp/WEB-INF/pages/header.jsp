@@ -13,7 +13,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/">Home</a></li>
+                <li class="active"><a href="/">Home</a></li>
                 <li><a href="/shop">매장</a></li>
                 <li><a href="/product">상품</a></li>
                 <li><a href="/user">사용자</a></li>

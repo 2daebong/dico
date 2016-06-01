@@ -86,7 +86,6 @@ public class AdminHomeController {
 
 
         List<Order> orderList = orderService.getOrderListByUser("admin");
-
         mv.addObject(orderList);
 
         return mv;

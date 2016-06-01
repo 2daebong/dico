@@ -5,7 +5,6 @@ import com.helicopter.dico.common.cart.model.CartItem;
 import com.helicopter.dico.common.cart.service.CartService;
 import com.helicopter.dico.common.order.entity.Order;
 import com.helicopter.dico.common.order.service.OrderService;
-import com.helicopter.dico.common.product.entity.Product;
 import com.helicopter.dico.common.product.service.ProductService;
 import org.apache.commons.collections.MapUtils;
 import org.apache.commons.lang3.StringUtils;

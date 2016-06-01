@@ -7,6 +7,7 @@ import com.helicopter.dico.common.order.enums.OrderStatusEnum;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -27,6 +28,10 @@ public class Order {
 
     private String phone;
 
+    @OneToMany
+    @JoinColumn(name = "orderNo")
+    private List<OrderItem> orderItemList = new ArrayList<>();
+
     @NotNull
     private int totalPrice;
 
@@ -36,6 +41,7 @@ public class Order {
     @NotNull @Enumerated(EnumType.STRING)
     private DeliveryTypeEnum deliveryType;
 
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registYmdt;
 
     private Date updateYmdt;
@@ -73,6 +79,30 @@ public class Order {
 
     public void setUserId(String userId) {
         this.userId = userId;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public List<OrderItem> getOrderItemList() {
+        return orderItemList;
+    }
+
+    public void setOrderItemList(List<OrderItem> orderItemList) {
+        this.orderItemList = orderItemList;
     }
 
     public int getTotalPrice() {
