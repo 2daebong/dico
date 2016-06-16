@@ -213,7 +213,7 @@
         }
 
         $.ajax({
-            url: "/api/products",
+            url: "/api/product",
             type: method,
             data: JSON.stringify(data),
             contentType: "application/json; charset=utf-8",
@@ -281,7 +281,7 @@
             var method = 'DELETE';
 
             $.ajax({
-                url: "/api/products",
+                url: "/api/product",
                 type: method,
                 data: JSON.stringify(data),
                 contentType: "application/json; charset=utf-8",
