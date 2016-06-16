@@ -37,7 +37,7 @@ public class ProductController {
     }
 
     @RequestMapping(value = "/api/product", method = RequestMethod.DELETE)
-    public void deletePruct(@RequestBody Long productNo){
+    public void deleteProduct(@RequestBody Long productNo){
         productService.deleteProduct(productNo);
     }
 
