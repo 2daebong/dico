@@ -49,7 +49,6 @@ public class DicoApiApplication extends SpringBootServletInitializer{
 
 	@Bean
 	public InternalResourceViewResolver viewResolver() {
-
 		InternalResourceViewResolver resolver = new InternalResourceViewResolver();
 		resolver.setPrefix("/WEB-INF/pages/");
 		resolver.setSuffix(".jsp");
