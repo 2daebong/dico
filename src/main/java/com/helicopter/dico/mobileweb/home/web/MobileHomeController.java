@@ -20,7 +20,7 @@ public class MobileHomeController {
     private ProductService productService;
 
     @RequestMapping(value = "/mweb/home", method = RequestMethod.GET)
-    public ModelAndView adminIndex() {
+    public ModelAndView index() {
 
         ModelAndView mv = new ModelAndView();
         mv.setViewName("mweb/index");
@@ -30,4 +30,14 @@ public class MobileHomeController {
 
         return mv;
     }
+
+    @RequestMapping(value = "/mweb/login", method = RequestMethod.GET)
+    public ModelAndView login() {
+
+        ModelAndView mv = new ModelAndView();
+        mv.setViewName("mweb/login");
+
+        return mv;
+    }
+
 }

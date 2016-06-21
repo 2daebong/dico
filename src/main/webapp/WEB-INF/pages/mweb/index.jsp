@@ -10,37 +10,7 @@
 </head>
 <body>
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="headerbar navbar-header">
-                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="/mweb/home">야채사요</a>
-                <a href="#" class="btn_basket">
-                    <span>장바구니</span>
-                </a>
-            </div>
-            <div id="navbar" class="collapse navbar-collapse">
-                <ul class="nav navbar-nav">
-                    <li class="active"><a href="/mweb/home">Home</a></li>
-                    <li><a href="#">로그인</a></li>
-                    <li><a href="#">내정보</a></li>
-                    <li><a href="#">주문정보</a></li>
-                    <li><a href="#">야채사요에 대하여</a></li>
-                </ul>
-            </div><!--/.nav-collapse -->
-        </div>
-    </nav>
-    <script type="text/javascript">
-        $('.nav li').click(function(e) {
-            $('.active').removeClass('active');
-            $(this).addClass('active');
-        });
-    </script>
+    <jsp:include page="header.jsp"/>
 
     <div class="container">
         <ul>
@@ -71,9 +41,21 @@
     </div>
 
 <script src="/js/bootstrap.min.js"></script>
-<script type="text/javascript">
-    <%--var l = ${productList};--%>
-//    console.log(l.length);
-</script>
+    <script type="text/javascript">
+        var naver_id_login = new naver_id_login("A4ss6_xU5SH1KaSgBFpP", "http://dicoadmin.com/mweb/home");
+        naver_id_login.setDomain("dicoadmin.com"); //상태 토큰 비교를 위한 domain 설정
+        naver_id_login.init_naver_id_login();
+
+        function naverSignInCallback() {
+            // naver_id_login.getProfileData('프로필항목명');
+            // 프로필 항목은 개발가이드를 참고하시기 바랍니다.
+            alert(naver_id_login.getProfileData('email'));
+            alert(naver_id_login.getProfileData('nickname'));
+            alert(naver_id_login.getProfileData('age'));
+        }
+
+        // 네이버 사용자 프로필 조회
+        naver_id_login.get_naver_userprofile("naverSignInCallback()");
+    </script>
 </body>
 </html>
