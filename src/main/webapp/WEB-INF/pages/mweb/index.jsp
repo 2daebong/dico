@@ -45,7 +45,6 @@
     <script type="text/javascript">
         var naver_id_login = new naver_id_login("A4ss6_xU5SH1KaSgBFpP", "http://dicoadmin.com/mweb/home");
         naver_id_login.setDomain("dicoadmin.com"); //상태 토큰 비교를 위한 domain 설정
-        naver_id_login.init_naver_id_login();
 
         function naverSignInCallback() {
             // naver_id_login.getProfileData('프로필항목명');
